@@ -17,8 +17,6 @@ app.use(cors());
 //Rutas
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/auth", auth);
-app.use("/uploads", express.static("uploads"));
-
 
 
 // Conectar a la base de datos

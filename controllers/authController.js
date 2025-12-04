@@ -50,8 +50,7 @@ exports.usuarioAutenticado = async (req, res) => {
       return res.status(404).json({ msg: "Usuario no encontrado" });
     }
 
-    res.json({ usuario, 
-    rol: usuario.rol });
+    res.json({ usuario, rol: usuario.rol });
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Hubo un error en el servidor" });
