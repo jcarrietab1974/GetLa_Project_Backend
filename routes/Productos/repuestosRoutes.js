@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const authMidd = require("../../middleware/authMidd");
 const soloAdmin = require("../../middleware/soloAdmin");
 
@@ -22,11 +21,7 @@ router.get("/", authMidd, obtenerProductosRepuestosHome);
 // ============================================
 // OBTENER PRODUCTOS POR CATEGORÍA
 // ============================================
-router.get(
-  "/categoria/:id",
-  authMidd,
-  obtenerListaDeProductosPorCategoriaId
-);
+router.get("/categoria/:id", authMidd, obtenerListaDeProductosPorCategoriaId);
 
 // ============================================
 // OBTENER PRODUCTO POR ID

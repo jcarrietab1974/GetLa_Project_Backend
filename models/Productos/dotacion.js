@@ -6,10 +6,10 @@ const ProductosDotacionSchema = mongoose.Schema({
   descripcion: { type: String, trim: true },
   stock: { type: Number, default: 0 },
   precio: { type: Number, default: 0 },
-  imagen: { type: String, required: true, trim: true }, 
+  imagen: { type: String, required: true, trim: true },
   estado: {
     type: String,
-    enum: ["OK", "DEFECTUOSO", "AGOTADO", "PENDIENTE"],
+    enum: ["OK", "DEFECTUOSO", "REPARACIÓN", "AGOTADO", "PENDIENTE"],
     default: "OK",
   },
   creado: { type: Date, default: Date.now },
