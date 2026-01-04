@@ -1,6 +1,6 @@
 const Productos = require("../../models/Productos/dotacion");
 
-// Obtener todos los productos de repuestos
+// Obtener todos los productos de dotación
 exports.obtenerProductosDotacionHome = async (req, res) => {
   try {
     const productos = await Productos.find();
@@ -42,11 +42,12 @@ exports.obtenerProductoPorId = async (req, res) => {
   }
 };
 
-// Crear un nuevo producto de repuestos
+// Crear un nuevo producto de dotación
 exports.crearProductosDotacion = async (req, res) => {
   const {
     referencia,
     nombre,
+    talla,
     descripcion,
     stock,
     precio,
@@ -56,9 +57,9 @@ exports.crearProductosDotacion = async (req, res) => {
   } = req.body;
 
   // Validar solo lo que es realmente obligatorio según el modelo
-  if (!referencia || !nombre || !imagen || !categoriaId) {
+  if (!referencia || !nombre || !talla || !imagen || !categoriaId) {
     return res.status(400).json({
-      msg: "Los campos referencia, nombre, imagen y categoriaId son obligatorios",
+      msg: "Los campos referencia, nombre, talla, imagen y categoriaId son obligatorios",
     });
   }
 
@@ -66,11 +67,12 @@ exports.crearProductosDotacion = async (req, res) => {
     const producto = new Productos({
       referencia,
       nombre,
+      talla,
       descripcion,
       stock,
       precio,
       imagen,
-      estado, // si no viene, el modelo pone "OK"
+      estado,
       categoriaId,
     });
 
@@ -82,7 +84,7 @@ exports.crearProductosDotacion = async (req, res) => {
   }
 };
 
-// Actualizar un producto de repuestos
+// Actualizar un producto de dotación
 exports.actualizarProductosDotacion = async (req, res) => {
   const { id } = req.params;
   const { categoriaId } = req.body;
@@ -94,7 +96,6 @@ exports.actualizarProductosDotacion = async (req, res) => {
       return res.status(404).json({ msg: "Producto no encontrado" });
     }
 
-    // Si envías categoriaId, validamos que coincida con la que ya tiene
     if (categoriaId && categoriaId !== producto.categoriaId.toString()) {
       return res.status(400).json({ msg: "El ID de la categoría no coincide" });
     }
@@ -102,6 +103,7 @@ exports.actualizarProductosDotacion = async (req, res) => {
     // Actualizar campos (con ?? para permitir 0 en stock/precio)
     producto.referencia = req.body.referencia ?? producto.referencia;
     producto.nombre = req.body.nombre ?? producto.nombre;
+    producto.talla = req.body.talla ?? producto.talla;
     producto.descripcion = req.body.descripcion ?? producto.descripcion;
     producto.stock = req.body.stock ?? producto.stock;
     producto.precio = req.body.precio ?? producto.precio;
@@ -116,7 +118,7 @@ exports.actualizarProductosDotacion = async (req, res) => {
   }
 };
 
-// Borrar un producto de repuestos
+// Borrar un producto de dotación
 exports.borrarProductosDotacion = async (req, res) => {
   try {
     const resultado = await Productos.deleteOne({ _id: req.params.id });
